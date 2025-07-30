@@ -64,5 +64,18 @@ $(document).ready(function () {
     // HINT: .animate() 메서드를 사용하세요.
     // 첫 번째 인자로 { width: "300px", opacity: 0.5 } 형태의 CSS 객체를,
     // 두 번째 인자로 시간(1500)을 전달합니다.
+    // 사용자 지정 메서드()
+    // animate({css속성정의},시간,콜백함수)
+    $("#p10-myBox").animate(
+      {
+        let: 300,
+        top: 300,
+        opacity: 0.5,
+      },
+      1500,
+      function () {
+        $("#p10-myBox").css("backgroundColor", "red");
+      }
+    );
   });
 });
