@@ -94,7 +94,26 @@ function getCatsWithCount() {
 
   // 여기에 코드 작성
   // count 개수만큼 고양이 사진 가져오기
-  // Array.from({length: count}, (_, i) => ...) 패턴 사용
+
+  //https://api.thecatapi.com/v1/images/search?limit=3
+  // .join("") 마지막에 ,나 ` 설정되는 것을 "" 빈 값으로 처리
+  $.get("https://api.thecatapi.com/v1/images/search?limit=10")
+    .done(function (data) {
+      const cats = data.slice(0, count);
+      $("#result4").html(
+        `<div class="photo-grid">
+        ${cats
+          .map(
+            (cat) => `<div class="photo-item">
+                
+                    <img src="${cat.url}"/>
+                </div>`
+          )
+          .join("")}
+      </div>`
+      );
+    })
+    .fail();
 }
 
 // 문제 5: 랜덤 동물 사진 갤러리
@@ -102,9 +121,16 @@ function getRandomGallery() {
   $("#result5").html(
     '<div class="loading">🎲 랜덤 동물 갤러리를 만드는 중...</div>'
   );
-
-  // 여기에 코드 작성
-  // 고양이 4장 + 강아지 4장 = 총 8장
-  // 두 배열을 합쳐서 하나의 갤러리로 표시
-  // concat()이나 spread operator(...) 사용 가능
+  animal("cat");
+  animal("dog");
+}
+function animal(동물이름) {
+  $.get(`https://api.the${동물이름}api.com/v1/images/search?limit=10`).done(
+    function (data) {
+      const count = data.slice(0, 5);
+      $("#result5").html(
+        $("#result5").html() + count.map((i) => `<img src="${i.url}">`)
+      );
+    }
+  );
 }
