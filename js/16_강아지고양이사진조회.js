@@ -62,10 +62,21 @@ function getSelectedAnimal() {
     '<div class="loading">선택한 동물 사진을 가져오는 중...</div>'
   );
 
-  // 여기에 코드 작성
-  // selected 값이 "cat"이면 고양이 사진 4장
-  // selected 값이 "dog"이면 강아지 사진 4장
-  // if문을 사용해서 조건에 따라 다른 사진 표시
+  $.get(
+    `
+    https://api.the${selected}api.com/v1/images/search?limit=3
+    `
+  ).done(function (data) {
+    const count = data.slice(0, 5);
+    $("#result3").html(
+      count.map(
+        (animal) => `
+            <img src="${animal.url}"/>
+            <p> ${selected} ID = ${animal.id}</p>
+        `
+      )
+    );
+  });
 }
 
 // 문제 4: 원하는 개수만큼 고양이 사진 가져오기
