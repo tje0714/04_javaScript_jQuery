@@ -6,6 +6,9 @@ $(function () {
   $("#btn3").click(getRandom);
   $("#btn4").click(getComments);
   $("#btn5").click(errorFn);
+  $("#btn6").click(getPosts);
+  $("#btn7").click(userList);
+  $("#btn8").click(searchUser);
 });
 
 // 문제 1 : 기본텍스트 데이터 가져오기
@@ -142,14 +145,91 @@ function errorFn() {
       // err 나 xhr 과 같은 명칭을 사용해주는 것이 바람직함
       function (xhr) {
         $("#result5").html(
-        `
+          `
         <div class = "error">
             에러 발생 ! <br>
             <strong>상태 코드 : </strong>${xhr.status}<br>
             <strong>에러 메세지 : </strong>${xhr.statusText}<br>
 
         </div>
-        `);
+        `
+        );
       }
     );
+}
+
+// 문제 6: 게시물 5개 가져오기
+// https://jsonplaceholder.typicode.com/posts?_limit=5
+function getPosts() {
+  $.get("https://jsonplaceholder.typicode.com/posts?_limit=5").done(function (
+    data
+  ) {
+    $("#result6").html(
+      // data 가 배열 = 목록 = 리스트 형태로 다수 존재할 경우
+      // data.map() 배열형태를 하나씩 꺼내서 나열하는 메서드 사용
+      data.map((i) => `<p><strong>${i.title}</strong></p>`)
+    );
+  });
+}
+
+// 문제 7 : 유저 목록 모두 조회하기
+// https://jsonplaceholder.typicode.com/users
+function userList() {
+  $.get("https://jsonplaceholder.typicode.com/users").done(
+    // 데이터 가져오기 성공했을 경우
+    // data.map 을 활용해서 모든 유저 목록 확인
+    // result7.html (``) 내부에 데이터를 확인
+    // map 내부에서 변수이름은 i 대신 user 사용해서
+    // <p>유저닉네임 : ${user.   }</p>
+    // <p>유저이메일 : ${user.   }</p>
+
+    function (data) {
+      $("#result7").html(
+        data.map(
+          (user) =>
+            `
+            <p>유저닉네임 : ${user.username}</p>
+             <p>유저이메일 : ${user.email}</p>
+            `
+        )
+      );
+    }
+  );
+}
+
+// 문제 8 : 검색 기능 구현하기
+//https://jsonplaceholder.typicode.com/users
+function searchUser() {
+  // 검색된 사용자의 val 값을 가져오기
+  const searchName = $("#searchName").val();
+  /*
+filter()
+배열 = 목록 = 리스트에서 조건에 맞는 것들만 골라내는 기능
+배열.filter(조건함수)
+
+data                     .     filter(      (user) =>                                 user.name == searchName)
+url에서 가져온 데이터들   에서   걸러낼게요    하나씩 data를 꺼내서 user 변수이름으로 확인  user에서 name과  소비자가 검색한 이름과 일치하는 것들만
+
+user 라는 변수이름에 담아둘게요.
+
+data                                    : url 에서 가져온 데이터를 담고있는 변수이름
+    .filter(                            : data에서 가져온 데이터들을 걸러내는 작업 진행
+        (user) =>                       : 우선은 data = user 서로 가지고있는 리스트가 동일하지만
+                                        : 추후 소비자가 찾는 이름과 user내에서 name 키로 일치하는 값만
+                                        : user 변수이름에 담아놓기 설정
+                user.name == searchName
+)
+*/
+  $.get("https://jsonplaceholder.typicode.com/users").done(function (data) {
+    $("#result8").html(
+      data
+        .filter((user) => user.name == searchName)
+        .map(
+          (user) => `
+        <p>${user.name}</p>
+        <p>${user.email}</p>
+        `
+        )
+    );
+  });
 }
