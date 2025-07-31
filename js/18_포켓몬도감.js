@@ -19,6 +19,21 @@ $(function () {
     현재페이지++;
     pokeInfo(현재페이지);
   });
+
+  $("#official").click(() => {
+    $.get("https://pokeapi.co/api/v2/pokemon/1").done(function (data) {
+      /*
+              "official-artwork": {
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+        
+        */
+      $("#pokemonContainer").html(
+        `
+        <img src="${data.sprites.other["official-artwork"].front_default}"/>
+        `
+      );
+    });
+  });
 });
 
 // 파이썬의 range() 처럼 숫자 배열을 만드는 함수
@@ -43,7 +58,8 @@ function pokeInfo(page) {
   const ids = range(startId, startId + 9);
 
   $("#pokemonContainer").html(""); // 페이지 변경될 때마다 기존 데이터 없애기
-
+  // 페이지 번호 변경 설정
+  $("#pageInfo").html(`페이지 ${page}`);
   ids.map((i) => {
     $.get(`https://pokeapi.co/api/v2/pokemon/${i}`).done(function (data) {
       $("#pokemonContainer").html(
