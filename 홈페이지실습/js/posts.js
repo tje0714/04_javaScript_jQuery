@@ -2,7 +2,7 @@
 let 현재페이지 = 1;
 let 전체게시물 = [];
 console.log("전체게시물 1번 : ", 전체게시물);
-const 페이지당게시물수 = 10; //한 페이지당 10개
+const 페이지당게시물수 = 3; //한 페이지당 10개
 
 $(function () {
   getAllPosts();
@@ -79,9 +79,9 @@ function getComments(postId) {
       data.map(
         (comment) =>
           `
-            <h4>${comment.name}</h4>
-            <p>${comment.email}</p>
-            <p>${comment.body}</p>
+            <h4>${comment.name} (<span class="comment-email">${comment.email}</span>)</h4>
+            
+            <p class="comment-body">${comment.body}</p>
           
           `
       )
