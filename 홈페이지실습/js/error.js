@@ -5,10 +5,10 @@ $(function () {
 function errorFn() {
   const errorVal = $("#errorSelect").val();
   $.get(`https://httpstat.us/${errorVal}`)
-    .done($("#errorResult").html('<div class="success">요청성공</div>'))
+    .done($("#errorResult").html('<div class="success">요청 성공</div>'))
     .fail(function (xhr, status, error) {
       const 상태코드 = xhr.status || "Unknown";
-      const 상태내용 = xhr.statusText || error;
+      const 상태내용 = xhr.상태내용 || error;
 
       let errorMsg = "";
       let errorIcon = "";
