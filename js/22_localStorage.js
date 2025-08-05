@@ -1,8 +1,9 @@
 $(function () {
   $("#saveData").click(saveDataFn);
   $("#getBtn").click(getDataFn);
+  $("#showAllBtn").click(showAllDataFn);
+  $("#clearAllBtn").click(clearAllDataFn);
 });
-
 
 // 크롬이나 엣지 등 브라우저에서 F12 클릭
 // F12 -> 애플리케이션 -> 로컬 스토리지 내부 확인
@@ -54,4 +55,39 @@ function getDataFn(e) {
         저장된 키 내부에 존재하는 값 : ${getValue}
         `
   );
+}
+
+// 키의 이름을 가져올 때는 index 번호를 활용해서 0번 째에 존재하는 key 명칭을 가져온다.
+// 가지고 온 키의 명칭을 활용해서 값을 가져올 수 있다.
+// getkey   = index 번호
+// getvalue = key 의 명칭
+
+// set 저장할 때는 순차적으로 0번부터 저장
+
+// for 문 보다 로컬스토리지에 리스트목록을 저장하는 것이 메모리 활용적
+// 로컬스토리지에 데이터를 저장할 때 배열, 리스트 형태로 저장
+function showAllDataFn(e) {
+  e.preventDefault();
+  let html = `<h3>크롬 브라우저에 저장된 데이터들 확인 </h3><ul>`;
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    html += `
+                <li>
+                    <strong>${key}</strong>:
+                    ${localStorage.getItem(i)}
+                </li>
+            `;
+  }
+
+  html += "</ul>";
+
+  $("#allData").html(html);
+}
+function clearAllDataFn(e) {
+  e.preventDefault();
+
+  if (confirm("정말로 모든 데이터를 삭제하시겠습니까?")) {
+    localStorage.clear();
+  }
+  showAllDataFn();
 }
