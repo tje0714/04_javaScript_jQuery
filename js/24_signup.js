@@ -24,6 +24,8 @@ $(function () {
     // TODO:
     // - 입력값 가져오기
     // - localStorage에 저장
+
+    let userList = JSON.parse(localStorage.getItem("users") || "[]");
     // - 성공 메시지 표시
   });
 });
