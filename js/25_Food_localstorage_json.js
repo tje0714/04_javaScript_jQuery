@@ -90,4 +90,26 @@ function clearAllFoodData(e) {
 
 function searchFoodData(e) {
   e.preventDefault();
+  let foodList = JSON.parse(localStorage.getItem("foodList") || "[]");
+  let html = `<h3>🍽️ 저장된 음식 조회결과</h3>`;
+  const searchValue = $("#searchValue").val().trim();
+  // 검색결과가 존재할 경우 검색결과 보여주기
+  const searchFoodDatas = foodList.filter(
+    (food) => food.foodName === searchValue
+  );
+
+  if (searchFoodDatas.length > 0) {
+    html += searchFoodDatas
+      .map(
+        (f) => `
+      <div class="item-row">
+        ${f.foodName}
+        </div>
+      
+      `
+      )
+      .join("");
+  }
+
+  $("#searchResult").html(html).show(); //display : none 를 볼 수있도록 설정하는 기능
 }
