@@ -39,19 +39,10 @@ function displayMovies(movies) {
     .join("");
   $(".movies").html(movieCard);
 }
-// 로그인 팝업 열기
-function openLoginPopup() {
-  window.open("login.html", "_blank", "width=450,height=600");
-}
 
-// 회원가입 페이지로 이동
-function goToSignup() {
-  window.location.href = "register.html";
-}
 
 // 상세페이지 이동
-function goToDetail(movieId) {
-    /*
+/*
     우리반에서 개발을 진행하기 위해 index.html 화면을 보여주는 주소
     http://127.0.0.1:5500/index.html   ?key=value
     ? 뒤는 매개변수로 전달받은 값을 detail.html 에 전달하겠다
@@ -62,5 +53,17 @@ function goToDetail(movieId) {
     해당 데이터를 detail에서 불러올 수 있음
     
     */
+function goToDetail(movieId) {
+    
     window.location.href = `detail.html?id=${movieId}`;
+}
+
+// 로그인 팝업 열기
+function openLoginPopup() {
+  window.open("login.html", "_blank", "width=450,height=600");
+}
+
+// 회원가입 페이지로 이동
+function goToSignup() {
+  window.location.href = "register.html";
 }
