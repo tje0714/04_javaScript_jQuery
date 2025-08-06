@@ -8,7 +8,7 @@ function loadMovies() {
   $.get("https://ghibliapi.vercel.app/films")
     .done(function (data) {
       // .loading .hide()
-
+      $(".loading").hide();
       displayMovies(data);
     })
     .fail(function () {});
@@ -26,7 +26,9 @@ function displayMovies(movies) {
                         <p><strong>감독:</strong> ${movie.director}</p>
                         <p><strong>제작자:</strong> ${movie.producer}</p>
                         <p>
-                        <span class="detail-link" onclick="goToDetail('${movie.id}')"  >
+                        <span class="detail-link" onclick="goToDetail('${
+                          movie.id
+                        }')"  >
                             ${
                               movie.description.substring(0, 50) + "...상세보기"
                             }
@@ -39,7 +41,6 @@ function displayMovies(movies) {
     .join("");
   $(".movies").html(movieCard);
 }
-
 
 // 상세페이지 이동
 /*
@@ -54,8 +55,7 @@ function displayMovies(movies) {
     
     */
 function goToDetail(movieId) {
-    
-    window.location.href = `detail.html?id=${movieId}`;
+  window.location.href = `detail.html?id=${movieId}`;
 }
 
 // 로그인 팝업 열기
